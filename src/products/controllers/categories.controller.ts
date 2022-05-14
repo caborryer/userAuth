@@ -8,39 +8,41 @@ import {
     Delete,
     ParseIntPipe,
   } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
   
-  import { CategoriesService } from '../services/categories.service';
-  import { CreateCategoryDto, UpdateCategoryDto } from './../dtos/categories.dto';
+import { CategoriesService } from '../services/categories.service';
+import { CreateCategoryDto, UpdateCategoryDto } from './../dtos/categories.dto';
   
-  @Controller('categories')
-  export class CategoriesController {
-    constructor(private categoriesService: CategoriesService) {}
+@ApiTags('categories')
+@Controller('categories')
+export class CategoriesController {
+  constructor(private categoriesService: CategoriesService) {}
   
-    @Get()
-    findAll() {
-      return this.categoriesService.findAll();
+  @Get()
+  findAll() {
+    return this.categoriesService.findAll();
+  }
+  
+  @Get(':id')
+  get(@Param('id', ParseIntPipe) id: number) {
+    return this.categoriesService.findOne(id);
+  }
+  
+  @Post()
+  create(@Body() payload: CreateCategoryDto) {
+    return this.categoriesService.create(payload);
     }
   
-    @Get(':id')
-    get(@Param('id', ParseIntPipe) id: number) {
-      return this.categoriesService.findOne(id);
-    }
+  @Put(':id')
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() payload: UpdateCategoryDto,
+  ) {
+    return this.categoriesService.update(id, payload);
+  }
   
-    @Post()
-    create(@Body() payload: CreateCategoryDto) {
-      return this.categoriesService.create(payload);
-    }
-  
-    @Put(':id')
-    update(
-      @Param('id', ParseIntPipe) id: number,
-      @Body() payload: UpdateCategoryDto,
-    ) {
-      return this.categoriesService.update(id, payload);
-    }
-  
-    @Delete(':id')
-    remove(@Param('id', ParseIntPipe) id: number) {
-      return this.categoriesService.remove(+id);
-    }
+  @Delete(':id')
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.categoriesService.remove(+id);
+  }
   }
