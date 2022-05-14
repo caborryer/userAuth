@@ -8,7 +8,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - ~/Code/youtube_videos/node-mongo-rest-api/data:/data/db
+      - ~/apps/mongo:/data/db
     networks:
       - mongo-network
 
