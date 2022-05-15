@@ -1,12 +1,11 @@
 import { registerAs } from "@nestjs/config";
-import * as Joi from "joi";
-
-import { environments } from "./environments";
 
 export default registerAs("config", () => {
   return {
-    nodeEnv: process.env.NODE_ENV,
-    port: process.env.PORT,
+    database: {
+      name: process.env.DATABASE_NAME,
+      port: process.env.DATABASE_PORT,
+    },
     mongo: {
       dbName: process.env.MONGO_DB,
       user: process.env.MONGO_INITDB_ROOT_USERNAME,
@@ -15,10 +14,7 @@ export default registerAs("config", () => {
       host: process.env.MONGO_HOST,
       connection: process.env.MONGO_CONNECTION,
     },
+    apiKey: process.env.API_KEY,
+    jwtSecret: process.env.JWT_SECRET,
   };
-});
-
-export const configValidationSchema = Joi.object({
-  NODE_ENV: Joi.string().valid(...Object.keys(environments)),
-  PORT: Joi.number().integer(),
 });
