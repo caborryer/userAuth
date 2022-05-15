@@ -22,6 +22,6 @@ With the route
 `/auth/login`
 You can authenticate by stealing a token, then you can pass it to create products
 
-### For more information about this api, this is the endpoint documentation : 
+### For more information about this api, this is the documentation : 
 
 `/docs`
